@@ -1,0 +1,66 @@
+# =========================================================
+# FastttAuth - Configuration
+# =========================================================
+
+# الحالة
+enabled: true
+
+# بدون تشفير
+plaintext-passwords: true
+
+# الحد الأدنى لطول كلمة المرور
+min-password-length: 4
+
+# الحد الأقصى لطول كلمة المرور
+max-password-length: 30
+
+# عدد محاولات الدخول
+max-login-attempts: 3
+
+# تجميد اللاعب قبل الدخول
+freeze-player: true
+
+# منع الشات قبل الدخول
+block-chat: true
+
+# منع الأوامر قبل الدخول
+block-commands: true
+
+# قاعدة البيانات
+database:
+  type: "sqlite"
+  file: "players.db"
+
+# عرض كلمات المرور في Console
+console:
+  show-register: true
+  show-login: true
+  show-changepassword: true
+  show-unregister: true
+
+# تسجيل في ملف
+logging:
+  file: true
+  file-name: "passwords.log"
+
+# الرسائل
+messages:
+  prefix: "&8[&6FastttAuth&8] &r"
+  welcome: "&6مرحباً بك في السيرفر!"
+  already-registered: "&cأنت مسجل بالفعل! استخدم /login"
+  register-success: "&aتم تسجيلك بنجاح!"
+  login-success: "&aتم تسجيل الدخول بنجاح!"
+  wrong-password: "&cكلمة المرور خطأ!"
+  must-login: "&cيجب تسجيل الدخول أولاً!"
+  kicked: "&cتجاوزت عدد المحاولات!"
+  password-too-short: "&cكلمة المرور قصيرة جداً!"
+  password-too-long: "&cكلمة المرور طويلة جداً!"
+  passwords-dont-match: "&cكلمتا المرور غير متطابقتين!"
+  not-registered: "&cأنت غير مسجل! استخدم /register"
+  already-logged-in: "&cأنت مسجل دخول بالفعل!"
+  logout-success: "&aتم تسجيل الخروج بنجاح!"
+  changepassword-success: "&aتم تغيير كلمة المرور بنجاح!"
+  changepassword-wrong: "&cكلمة المرور القديمة خطأ!"
+  unregister-success: "&aتم حذف حسابك!"
+  reload-success: "&aتم إعادة تحميل الإعدادات!"
+  no-permission: "&cليس لديك صلاحية!"
