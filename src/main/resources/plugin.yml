@@ -1,0 +1,43 @@
+name: FastttAuth
+version: 1.0.0
+main: com.fast.auth.FastttAuth
+api-version: '1.21'
+author: Fast
+description: Register/Login plugin with password display
+
+commands:
+  register:
+    description: تسجيل حساب جديد
+    usage: /register <password> <confirm>
+    aliases: [reg]
+  login:
+    description: تسجيل الدخول
+    usage: /login <password>
+    aliases: [l]
+  logout:
+    description: تسجيل الخروج
+    usage: /logout
+  changepassword:
+    description: تغيير كلمة المرور
+    usage: /changepassword <old> <new>
+    aliases: [cp]
+  unregister:
+    description: حذف الحساب
+    usage: /unregister <password>
+  passwords:
+    description: عرض كلمات المرور (للأوب)
+    usage: /passwords
+    aliases: [pws]
+  authadmin:
+    description: أوامر إدارية
+    usage: /authadmin <reload|stats>
+    permission: fastttauth.admin
+    aliases: [aa]
+
+permissions:
+  fastttauth.admin:
+    description: صلاحيات الأدمن
+    default: op
+  fastttauth.bypass:
+    description: تجاوز التسجيل
+    default: false
