@@ -1,57 +1,57 @@
 package com.fast.auth;
 
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.Collections;
+import java.util.List;
 
-public final class PlayerManager {
+public final class AuthCommand implements CommandExecutor, TabCompleter {
 
     private final FastttAuth plugin;
-    private final Map<UUID, Boolean> loggedInPlayers;
-    private final Map<UUID, Location> frozenLocations;
-    private final Map<UUID, Integer> loginAttempts;
+    private final PlayerManager playerManager;
 
-    public PlayerManager(FastttAuth plugin) {
+    public AuthCommand(FastttAuth plugin, PlayerManager playerManager) {
         this.plugin = plugin;
-        this.loggedInPlayers = new HashMap<>();
-        this.frozenLocations = new HashMap<>();
-        this.loginAttempts = new HashMap<>();
+        this.playerManager = playerManager;
     }
 
-    public void setLoggedIn(Player player, boolean loggedIn) {
-        loggedInPlayers.put(player.getUniqueId(), loggedIn);
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!(sender instanceof org.bukkit.entity.Player)) {
+            sender.sendMessage("§cThis command can only be used by players.");
+            return true;
+        }
+
+        org.bukkit.entity.Player player = (org.bukkit.entity.Player) sender;
+        String cmd = command.getName().toLowerCase();
+
+        if ("login".equals(cmd)) {
+            if (playerManager.isLoggedIn(player)) {
+                player.sendMessage("§aYou are already logged in.");
+                return true;
+            }
+            player.sendMessage("§eUse /login <password>");
+            return true;
+        }
+
+        if ("register".equals(cmd)) {
+            if (playerManager.isLoggedIn(player)) {
+                player.sendMessage("§aYou are already logged in.");
+                return true;
+            }
+            player.sendMessage("§eUse /register <password> <confirm>");
+            return true;
+        }
+
+        player.sendMessage("§cUnknown command.");
+        return true;
     }
 
-    public boolean isLoggedIn(Player player) {
-        return loggedInPlayers.getOrDefault(player.getUniqueId(), false);
-    }
-
-    public void freezePlayer(Player player) {
-        frozenLocations.put(player.getUniqueId(), player.getLocation().clone());
-    }
-
-    public Location getFrozenLocation(Player player) {
-        return frozenLocations.get(player.getUniqueId());
-    }
-
-    public int incrementLoginAttempts(Player player) {
-        UUID uuid = player.getUniqueId();
-        int attempts = loginAttempts.getOrDefault(uuid, 0) + 1;
-        loginAttempts.put(uuid, attempts);
-        return attempts;
-    }
-
-    public void clearLoginAttempts(Player player) {
-        loginAttempts.remove(player.getUniqueId());
-    }
-
-    public void clearPlayer(Player player) {
-        UUID uuid = player.getUniqueId();
-        loggedInPlayers.remove(uuid);
-        frozenLocations.remove(uuid);
-        loginAttempts.remove(uuid);
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        return Collections.emptyList();
     }
 }
